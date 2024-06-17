@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0' // Spring Boot 플러그인 버전을 지정합니다.
+    id 'io.spring.dependency-management' version '1.1.0' // 의존성 관리를 위한 플러그인 버전을 지정합니다.
+}
+
+group = 'me.shinsunyoung' // 프로젝트 그룹을 지정합니다.
+version = '1.0' // 프로젝트 버전을 지정합니다.
+sourceCompatibility = '17' // 사용할 자바 버전을 지정합니다.
+
+repositories {
+    mavenCentral() // Maven 중앙 저장소를 사용합니다.
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Spring Web 의존성을 추가합니다.
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Spring Data JPA 의존성을 추가합니다.
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0' // Swagger 의존성 추가
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6' // query log 출력 시 인자값 보여는 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 타임리프 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security의 기본 기능을 제공하는 스타터 패키지. 인증과 인가를 위한 보안 기능을 설정하고 사용할 수 있게 해줍니다.
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // Thymeleaf 템플릿에서 Spring Security의 기능을 사용할 수 있게 해줍니다.
+    implementation 'io.jsonwebtoken:jjwt:0.9.1' // 자바 jwt 라이브러리
+    implementation 'javax.xml.bind:jaxb-api:2.3.1' // XML문서와 Java객체 간 매핑 자동화
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // OAuth2 의존성 추가
+    implementation 'com.mysql:mysql-connector-j' // Mysql 의존성 추가
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' // Spring Boot 테스트 의존성을 추가합니다.
+    testImplementation 'org.projectlombok:lombok' // 테스트에 Lombok 의존성을 추가합니다.
+    testImplementation 'org.springframework.security:spring-security-test' // Spring Security의 테스트 기능을 제공하는 라이브러리.
+
+    compileOnly 'org.projectlombok:lombok' // Lombok 컴파일 전용 의존성을 추가합니다.
+//  runtimeOnly 'com.mysql:mysql-connector-j' // Mysql 의존성 추가
+
+    annotationProcessor 'org.projectlombok:lombok' // Lombok 애노테이션 프로세서를 설정합니다.
+    testAnnotationProcessor 'org.projectlombok:lombok' // 테스트에서도 Lombok 애노테이션 프로세서를 사용할 수 있게 설정합니다.
+}
+
+test {
+    useJUnitPlatform() // JUnit 플랫폼을 사용하여 테스트를 실행합니다.
+}
