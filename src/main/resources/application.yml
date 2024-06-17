@@ -1,0 +1,52 @@
+server:
+  port: 80  # 내장 톰캣 포트번호
+
+spring:
+  # JPA 설정
+  jpa:
+    show-sql: true  # JPA 쿼리 실행 시 SQL 쿼리를 콘솔에 출력합니다.
+    hibernate:
+      ddl-auto: update  # Hibernate의 DDL 생성 전략을 'update'로 설정합니다.
+    properties:
+      hibernate:
+        format_sql: true  # Hibernate가 출력하는 SQL을 포맷팅하여 읽기 쉽게 표시합니다.
+    defer-datasource-initialization: true  # 데이터 소스 초기화를 지연시킵니다.
+
+  # MySQL 설정 ( AWS에서 설정 )
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&characterEncoding=UTF-8  # MySQL 데이터베이스 연결 URL
+#    username: ssafy  # MySQL 접속 ID
+#    password: ssafy  # MySQL 접속 비밀번호
+#    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 드라이버 클래스 이름
+
+  # Spring Security OAuth2 설정 ( AWS에서 설정 )
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: client_id
+            client-secret: client_secret
+            scope:
+              - email
+              - profile
+
+# Springdoc OpenAPI 설정
+springdoc:
+  version: '@project.version@'  # 프로젝트 버전을 통해 Springdoc OpenAPI 버전을 설정합니다.
+  api-docs:
+    path: /api-docs  # OpenAPI 문서의 엔드포인트 경로를 설정합니다.
+  default-consumes-media-type: application/json  # 기본 요청 미디어 타입을 JSON으로 설정합니다.
+  default-produces-media-type: application/json  # 기본 응답 미디어 타입을 JSON으로 설정합니다.
+  swagger-ui:
+    operations-sorter: alpha  # Swagger UI에서 오퍼레이션을 알파벳 순으로 정렬합니다.
+    tags-sorter: alpha  # Swagger UI에서 태그를 알파벳 순으로 정렬합니다.
+    path: /swagger-ui.html  # Swagger UI의 경로를 설정합니다.
+    disable-swagger-default-url: true  # Swagger UI의 기본 URL을 비활성화합니다.
+    display-query-params-without-oauth2: true  # OAuth2 없이 쿼리 매개변수를 표시합니다.
+    doc-expansion: none  # Swagger UI에서 문서 확장을 비활성화합니다.
+
+# JWT 설정
+jwt:
+  issuer: rinch12332@gmail.com  # 이슈 발급자
+  secret_key: secret_key  # 비밀키
