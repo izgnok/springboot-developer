@@ -19,17 +19,17 @@ spring:
 #    password: ssafy  # MySQL 접속 비밀번호
 #    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 드라이버 클래스 이름
 
-  # Spring Security OAuth2 설정
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 674008357508-bvkbmjfop84kpaqb6trfev33l2gcj3du.apps.googleusercontent.com
-            client-secret: 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
-            scope:
-              - email
-              - profile
+  # Spring Security OAuth2 설정 ( AWS에서 설정 )
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: 674008357508-bvkbmjfop84kpaqb6trfev33l2gcj3du.apps.googleusercontent.com
+#            client-secret: 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
+#            scope:
+#              - email
+#              - profile
 
 # Springdoc OpenAPI 설정
 springdoc:
