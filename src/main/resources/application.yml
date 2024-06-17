@@ -12,14 +12,14 @@ spring:
         format_sql: true  # Hibernate가 출력하는 SQL을 포맷팅하여 읽기 쉽게 표시합니다.
     defer-datasource-initialization: true  # 데이터 소스 초기화를 지연시킵니다.
 
-  # MySQL 설정 ( AWS에서 설정 )
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&characterEncoding=UTF-8  # MySQL 데이터베이스 연결 URL
-#    username: ssafy  # MySQL 접속 ID
-#    password: ssafy  # MySQL 접속 비밀번호
-#    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 드라이버 클래스 이름
+  # MySQL 설정 ( AWS에서 덮어짐 )
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&characterEncoding=UTF-8  # MySQL 데이터베이스 연결 URL
+    username: ssafy  # MySQL 접속 ID
+    password: ssafy  # MySQL 접속 비밀번호
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 드라이버 클래스 이름
 
-  # Spring Security OAuth2 설정 ( AWS에서 설정 )
+  # Spring Security OAuth2 설정 ( AWS에서 덮어짐 )
   security:
     oauth2:
       client:
@@ -46,7 +46,7 @@ springdoc:
     display-query-params-without-oauth2: true  # OAuth2 없이 쿼리 매개변수를 표시합니다.
     doc-expansion: none  # Swagger UI에서 문서 확장을 비활성화합니다.
 
-# JWT 설정
+# JWT 설정 ( AWS에서 덮어짐 )
 jwt:
   issuer: rinch12332@gmail.com  # 이슈 발급자
   secret_key: secret_key  # 비밀키
