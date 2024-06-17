@@ -38,7 +38,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }} # AWS 액세스 키
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # AWS 시크릿 키
           application_name: springboot-developer # AWS Elastic Beanstalk 애플리케이션 이름
-          environment_name: SpringBootDeveloper-env # AWS Elastic Beanstalk 환경 이름
+          environment_name: Springboot-developer-env  # AWS Elastic Beanstalk 환경 이름
           version_label: github-action-${{steps.current-time.outputs.formattedTime}} # 배포 버전 레이블
           region: ap-northeast-2 # AWS 리전 (서울)
           deployment_package: ./build/libs/${{env.artifact}} # 배포 패키지 경로
