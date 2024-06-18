@@ -1,24 +1,29 @@
 package me.shinsunyoung.springbootdeveloper.service;
 
-import lombok.RequiredArgsConstructor;
-import me.shinsunyoung.springbootdeveloper.domain.Article;
-import me.shinsunyoung.springbootdeveloper.dto.AddArticleRequest;
-import me.shinsunyoung.springbootdeveloper.dto.UpdateArticleRequest;
-import me.shinsunyoung.springbootdeveloper.repository.BlogRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor; // Lombok 애너테이션: final 필드가 있는 생성자 자동 생성
+import me.shinsunyoung.springbootdeveloper.config.error.exception.ArticleNotFoundException; // ArticleNotFoundException import
+import me.shinsunyoung.springbootdeveloper.domain.Article; // Article 엔티티 import
+import me.shinsunyoung.springbootdeveloper.domain.Comment; // Comment 엔티티 import
+import me.shinsunyoung.springbootdeveloper.dto.AddArticleRequest; // AddArticleRequest DTO import
+import me.shinsunyoung.springbootdeveloper.dto.AddCommentRequest; // AddCommentRequest DTO import
+import me.shinsunyoung.springbootdeveloper.dto.UpdateArticleRequest; // UpdateArticleRequest DTO import
+import me.shinsunyoung.springbootdeveloper.repository.BlogRepository; // BlogRepository import
+import me.shinsunyoung.springbootdeveloper.repository.CommentRepository; // CommentRepository import
+import org.springframework.security.core.context.SecurityContextHolder; // SecurityContextHolder import
+import org.springframework.stereotype.Service; // Service 빈으로 등록
+import org.springframework.transaction.annotation.Transactional; // 트랜잭션 애너테이션 import
 
-import java.util.List;
+import java.util.List; // List import
 
 /**
  * 블로그 글 관련 비즈니스 로직을 처리하는 서비스 클래스입니다.
  */
-@RequiredArgsConstructor // final이 붙거나 @NotNull이 붙은 필드의 생성자 추가
+@RequiredArgsConstructor // final 필드가 있는 생성자 자동 생성
 @Service // 빈으로 등록
 public class BlogService {
 
-    private final BlogRepository blogRepository;
+    private final BlogRepository blogRepository; // BlogRepository 필드
+    private final CommentRepository commentRepository; // CommentRepository 필드
 
     /**
      * 주어진 요청과 작성자 이름을 바탕으로 새로운 블로그 글을 저장합니다.
@@ -49,7 +54,7 @@ public class BlogService {
      */
     public Article findById(long id) {
         return blogRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not fount: " + id));
+                .orElseThrow(ArticleNotFoundException::new);
     }
 
     /**
@@ -94,5 +99,21 @@ public class BlogService {
         if (!article.getAuthor().equals(userName)) {
             throw new IllegalArgumentException("not authorized");
         }
+    }
+
+    /**
+     * 주어진 요청과 사용자 이름을 바탕으로 새로운 댓글을 추가합니다.
+     *
+     * @param request   추가할 댓글의 요청 데이터
+     * @param userName  댓글의 작성자 이름
+     * @return          저장된 Comment 객체
+     */
+    public Comment addComment(AddCommentRequest request, String userName) {
+        // 요청에서 게시물 ID를 사용하여 해당 게시물을 불러옴
+        Article article = blogRepository.findById(request.getArticleId())
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + request.getArticleId()));
+
+        // 받아온 게시물과 사용자 이름을 사용하여 댓글 엔티티 생성 후 저장
+        return commentRepository.save(request.toEntity(userName, article));
     }
 }

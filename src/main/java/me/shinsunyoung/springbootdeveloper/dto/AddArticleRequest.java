@@ -1,5 +1,7 @@
 package me.shinsunyoung.springbootdeveloper.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +12,11 @@ import me.shinsunyoung.springbootdeveloper.domain.Article;
 @Getter // 모든 필드에 대한 getter 메서드를 자동으로 생성하는 Lombok 애노테이션
 public class AddArticleRequest {
 
+    @NotNull
+    @Size(min = 1, max = 10)
     private String title; // 글 제목 필드
 
+    @NotNull
     private String content; // 글 내용 필드
 
     // AddArticleRequest 객체를 Article 엔티티로 변환하는 메서드

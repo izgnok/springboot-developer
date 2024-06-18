@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class) // JPA Auditing 기능을 사용하기 위한 애노테이션
 @Entity // JPA 엔티티임을 나타내는 애노테이션
@@ -37,6 +38,9 @@ public class Article {
     @LastModifiedDate // 엔티티가 수정될 때 자동으로 현재 시간 값이 할당됨
     @Column(name = "updated_at") // 데이터베이스 컬럼 이름 지정
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+    private List<Comment> comments; // 해당 게시글에 연결된 댓글 리스트를 나타내며, CascadeType.REMOVE 설정으로 게시글 삭제 시 연결된 모든 댓글도 함께 삭제됩니다.
 
     @Builder // 빌더 패턴을 사용하여 객체를 생성할 수 있는 빌더 메서드를 자동으로 생성하는 애노테이션
     public Article(String author, String title, String content) {

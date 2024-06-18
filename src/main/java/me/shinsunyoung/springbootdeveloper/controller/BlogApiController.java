@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import me.shinsunyoung.springbootdeveloper.domain.Article;
-import me.shinsunyoung.springbootdeveloper.dto.AddArticleRequest;
-import me.shinsunyoung.springbootdeveloper.dto.ArticleResponse;
-import me.shinsunyoung.springbootdeveloper.dto.UpdateArticleRequest;
+import me.shinsunyoung.springbootdeveloper.domain.Comment;
+import me.shinsunyoung.springbootdeveloper.dto.*;
 import me.shinsunyoung.springbootdeveloper.service.BlogService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -27,7 +27,7 @@ public class BlogApiController {
             description = "블로그의 글을 등록 합니다." // 상세 설명
     )
     @PostMapping("/articles") // HTTP POST 요청을 /articles 경로와 매핑
-    public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request, Principal principal) {
+    public ResponseEntity<Article> addArticle(@RequestBody @Validated AddArticleRequest request, Principal principal) {
         // 요청 본문에 포함된 AddArticleRequest 객체를 받아서 블로그 글을 저장
         Article savedArticle = blogService.save(request, principal.getName());
         // 요청한 자원이 성공적으로 생성되었으며 저장된 블로그 글 정보를 응답 객체에 담아 전송
@@ -82,5 +82,17 @@ public class BlogApiController {
         Article updatedArticle = blogService.update(id, request);
         // 수정된 글 정보를 응답 객체에 담아 전송
         return ResponseEntity.ok(updatedArticle);
+    }
+
+    @Operation(
+            summary = "댓글 작성", // API 요약 설명
+            description = "주어진 요청을 바탕으로 새로운 댓글을 작성합니다." // API 상세 설명
+    )
+    @PostMapping("/comments")
+    public ResponseEntity<AddCommentResponse> addComment(@RequestBody AddCommentRequest request, Principal principal) {
+        // 사용자 이름을 통해 댓글을 추가하고 반환된 Comment 객체를 저장
+        Comment savedComment = blogService.addComment(request, principal.getName());
+        // 추가된 댓글을 AddCommentResponse 객체로 래핑하여 ResponseEntity로 반환
+        return ResponseEntity.ok(new AddCommentResponse(savedComment));
     }
 }
