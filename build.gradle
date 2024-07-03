@@ -33,6 +33,7 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok' // 컴파일 시 Lombok을 사용할 수 있도록 Lombok 의존성을 추가합니다.
 //    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL 의존성을 런타임에만 사용할 경우에 추가합니다. 현재는 주석 처리되어 있습니다.
+    runtimeOnly 'com.h2database:h2'
 
     annotationProcessor 'org.projectlombok:lombok' // Lombok 애노테이션 프로세서를 설정합니다.
     testAnnotationProcessor 'org.projectlombok:lombok' // 테스트에서도 Lombok 애노테이션 프로세서를 사용할 수 있도록 설정합니다.
